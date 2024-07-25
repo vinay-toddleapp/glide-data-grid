@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BasicTable from "./components/BasicTable/BasicTable";
+import EditableTable from "./components/EditableTable/EditableTable";
 
 const App = () => {
   const demos = {
@@ -8,9 +9,16 @@ const App = () => {
       value: "basicTable",
       component: <BasicTable />,
     },
+    editableTable: {
+      name: "Editable Table",
+      value: "editableTable",
+      component: <EditableTable />,
+    },
   };
   const allDemo = Object.values(demos);
-  const [currentValue, setCurrentValue] = useState<string>(allDemo[0].value);
+  const [currentValue, setCurrentValue] = useState<string>(
+    allDemo[allDemo.length - 1].value
+  );
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentValue(event.target.value);
   };
