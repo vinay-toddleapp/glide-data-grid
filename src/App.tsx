@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BasicTable from "./components/BasicTable/BasicTable";
 import EditableTable from "./components/EditableTable/EditableTable";
+import DisableAnEditCellCoExist from "./components/DisableAnEditCellCoExist/DisableAnEditCellCoExist";
 
 const App = () => {
   const demos = {
@@ -13,6 +14,11 @@ const App = () => {
       name: "Editable Table",
       value: "editableTable",
       component: <EditableTable />,
+    },
+    disableAnEditCellCoExist: {
+      name: "Disabled and edit cell co-exist",
+      value: "disableAnEditCellCoExist",
+      component: <DisableAnEditCellCoExist />,
     },
   };
   const allDemo = Object.values(demos);
