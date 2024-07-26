@@ -1,4 +1,9 @@
-import { IColumnsData, IDataRow, IDisabledAndEditCell } from "./interface";
+import {
+  IColumnsData,
+  ICustomTableData,
+  IDataRow,
+  IDisabledAndEditCell,
+} from "./interface";
 
 export const data: IDataRow[] = [
   {
@@ -112,5 +117,87 @@ export const disabledAndEditCellData: IDisabledAndEditCell[] = [
     company: { value: "SoftSolutions" },
     email: { value: "david.brown@softsolutions.com" },
     phone: { value: "+1 (555) 654-3210", isDisabled: true },
+  },
+];
+
+export const customTableColumns: IColumnsData[] = [
+  {
+    title: "S.no",
+    id: "s.no",
+  },
+  {
+    title: "Task Name",
+    id: "taskName",
+  },
+  {
+    title: "Task Completed",
+    id: "taskCompleted",
+  },
+  {
+    title: "Assigned To",
+    id: "assignedTo",
+  },
+];
+
+export const customTableData: ICustomTableData[] = [
+  {
+    sNo: 1,
+    taskName: "Develop Login Page",
+    isCompleted: false,
+    assignedTo: "Abhirup Bardhan",
+  },
+  {
+    sNo: 2,
+    taskName: "Database Optimization",
+    isCompleted: true,
+    assignedTo: "Abhirup Bardhan",
+  },
+  {
+    sNo: 3,
+    taskName: "API Integration",
+    isCompleted: true,
+    assignedTo: "Abhirup Bardhan",
+  },
+  {
+    sNo: 4,
+    taskName: "Fix UI Bugs",
+    isCompleted: false,
+    assignedTo: "Soumendu Prasad Sinha",
+  },
+  {
+    sNo: 5,
+    taskName: "Write Unit Tests",
+    isCompleted: true,
+    assignedTo: "Abhirup Bardhan",
+  },
+  {
+    sNo: 6,
+    taskName: "Deploy to Production",
+    isCompleted: false,
+    assignedTo: "Soumendu Prasad Sinha",
+  },
+  {
+    sNo: 7,
+    taskName: "Update Documentation",
+    isCompleted: true,
+    assignedTo: "Abhirup Bardhan",
+  },
+  {
+    sNo: 8,
+    taskName: "Code Review",
+    isCompleted: true,
+    assignedTo: "Vinay Pratap Singh",
+  },
+  {
+    sNo: 9,
+    taskName: "Implement Search Feature",
+    isCompleted: true,
+    assignedTo: "Satish Kumar Narava",
+  },
+  {
+    sNo: 10,
+    taskName: "Bug Fixing",
+    isCompleted: true,
+    assignedTo: "Satish Kumar Narava",
   },
 ];

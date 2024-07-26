@@ -3,6 +3,7 @@ import BasicTable from "./components/BasicTable/BasicTable";
 import EditableTable from "./components/EditableTable/EditableTable";
 import DisableAnEditCellCoExist from "./components/DisableAnEditCellCoExist/DisableAnEditCellCoExist";
 import DisableEditAndErrorState from "./components/DisableEditAndErrorState/DisableEditAndErrorState";
+import CustomCellExample from "./components/CustomCell/CustomCell";
 
 const App = () => {
   const demos = {
@@ -25,6 +26,11 @@ const App = () => {
       name: "Disabled, edit and error state co-exist",
       value: "disableEditAndErrorState",
       component: <DisableEditAndErrorState />,
+    },
+    customCell: {
+      name: "Cell with different react component",
+      value: "customCell",
+      component: <CustomCellExample />,
     },
   };
   const allDemo = Object.values(demos);

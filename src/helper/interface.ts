@@ -32,3 +32,14 @@ export interface IColumnsData {
   title: string;
   id: string;
 }
+
+export interface ICustomTableData {
+  sNo: number;
+  taskName: string;
+  isCompleted: boolean;
+  assignedTo:
+    | "Vinay Pratap Singh"
+    | "Satish Kumar Narava"
+    | "Abhirup Bardhan"
+    | "Soumendu Prasad Sinha";
+}
