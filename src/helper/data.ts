@@ -92,7 +92,7 @@ export const disabledAndEditCellData: IDisabledAndEditCell[] = [
       value: "TechCorp",
       isDisabled: false,
     },
-    email: { value: "alice.johnson@techcorp.com" },
+    email: { value: "alice.johnson@techcorp.com", hasError: true },
     phone: { value: "+1 (555) 123-4567" },
   },
   {
@@ -105,10 +105,10 @@ export const disabledAndEditCellData: IDisabledAndEditCell[] = [
     name: { value: "Carol White" },
     company: { value: "NextGen" },
     email: { value: "carol.white@nextgen.com" },
-    phone: { value: "+1 (555) 321-0987" },
+    phone: { value: "+1 (555) 321-0987", hasError: true },
   },
   {
-    name: { value: "David Brown" },
+    name: { value: "David Brown", hasError: true },
     company: { value: "SoftSolutions" },
     email: { value: "david.brown@softsolutions.com" },
     phone: { value: "+1 (555) 654-3210", isDisabled: true },

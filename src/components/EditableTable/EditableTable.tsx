@@ -10,7 +10,7 @@ import {
 import { IDataRow } from "../../helper/interface";
 
 const EditableTable = () => {
-  const [tableData] = useState(data);
+  const [tableData, setTableData] = useState(data);
 
   const getCellContent = useCallback(
     (cell: Item): GridCell => {
@@ -35,7 +35,9 @@ const EditableTable = () => {
     const indexes: (keyof IDataRow)[] = ["name", "company", "email", "phone"];
     const [col, row] = cell;
     const key = indexes[col];
-    data[row][key] = newValue.data;
+    const newData = [...tableData];
+    newData[row][key] = newValue.data;
+    setTableData([...newData]);
   }, []);
 
   return (

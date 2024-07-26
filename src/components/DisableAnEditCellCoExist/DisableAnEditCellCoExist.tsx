@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { columns, data, disabledAndEditCellData } from "../../helper/data";
+import { columns, disabledAndEditCellData } from "../../helper/data";
 import {
   DataEditor,
   EditableGridCell,
@@ -10,7 +10,7 @@ import {
 import { IDataRow } from "../../helper/interface";
 
 const DisableAnEditCellCoExist = () => {
-  const [tableData] = useState(disabledAndEditCellData);
+  const [tableData, setTableData] = useState(disabledAndEditCellData);
 
   const getCellContent = useCallback(
     (cell: Item): GridCell => {
@@ -37,7 +37,9 @@ const DisableAnEditCellCoExist = () => {
     const indexes: (keyof IDataRow)[] = ["name", "company", "email", "phone"];
     const [col, row] = cell;
     const key = indexes[col];
-    data[row][key] = newValue.data;
+    const newData = [...tableData];
+    newData[row][key].value = newValue.data;
+    setTableData([...newData]);
   }, []);
 
   return (

@@ -9,18 +9,22 @@ export interface IDisabledAndEditCell {
   name: {
     value: string;
     isDisabled?: boolean;
+    hasError?: boolean;
   };
   company: {
     value: string;
     isDisabled?: boolean;
+    hasError?: boolean;
   };
   email: {
     value: string;
     isDisabled?: boolean;
+    hasError?: boolean;
   };
   phone: {
     value: string;
     isDisabled?: boolean;
+    hasError?: boolean;
   };
 }
 
