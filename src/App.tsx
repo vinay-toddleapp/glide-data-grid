@@ -4,6 +4,7 @@ import EditableTable from "./components/EditableTable/EditableTable";
 import DisableAnEditCellCoExist from "./components/DisableAnEditCellCoExist/DisableAnEditCellCoExist";
 import DisableEditAndErrorState from "./components/DisableEditAndErrorState/DisableEditAndErrorState";
 import CustomCellExample from "./components/CustomCell/CustomCell";
+import GroupHeader from "./components/GroupHeader/GroupHeader";
 
 const App = () => {
   const demos = {
@@ -31,6 +32,11 @@ const App = () => {
       name: "Cell with different react component",
       value: "customCell",
       component: <CustomCellExample />,
+    },
+    groupHeader: {
+      name: "Group header",
+      value: "groupHeader",
+      component: <GroupHeader />,
     },
   };
   const allDemo = Object.values(demos);

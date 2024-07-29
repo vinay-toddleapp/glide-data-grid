@@ -150,6 +150,7 @@ const CustomCellExample = () => {
       columns={customTableColumns}
       rows={tableData.length}
       customRenderers={[renderer]}
+      // cellActivationBehavior="single-click"
     />
   );
 };
