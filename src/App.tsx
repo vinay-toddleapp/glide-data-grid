@@ -5,6 +5,7 @@ import DisableAnEditCellCoExist from "./components/DisableAnEditCellCoExist/Disa
 import DisableEditAndErrorState from "./components/DisableEditAndErrorState/DisableEditAndErrorState";
 import CustomCellExample from "./components/CustomCell/CustomCell";
 import GroupHeader from "./components/GroupHeader/GroupHeader";
+import HtmlToCanvasCustomCell from "./components/HtmlToCanvasCustomCell/HtmlToCanvasCustomCell";
 
 const App = () => {
   const demos = {
@@ -37,6 +38,11 @@ const App = () => {
       name: "Group header",
       value: "groupHeader",
       component: <GroupHeader />,
+    },
+    htmlToCanvasCustomCell: {
+      name: "Rendering custom component using `html to canvas` library",
+      value: "htmlToCanvasCustomCell",
+      component: <HtmlToCanvasCustomCell />,
     },
   };
   const allDemo = Object.values(demos);
