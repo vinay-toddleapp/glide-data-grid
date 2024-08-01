@@ -51,7 +51,6 @@ const FigmaDesign = () => {
     draw: (args: DrawArgs<ICustomCell>) => {
       const { cell, ctx, rect } = args;
       const { x, y, width, height } = rect;
-      console.log(height);
       const { prefixText, subTitle, suffixText, title = "" } = cell.data;
       const prefixBgColor = "#E3E3FC";
       const prefixTextColor = "#5050C5";
@@ -68,6 +67,7 @@ const FigmaDesign = () => {
       } else {
         const gap = 8;
         let titleX = x + gap;
+        let titleY = y + height / 2;
 
         if (prefixText) {
           // draw circular prefix
@@ -90,22 +90,72 @@ const FigmaDesign = () => {
           titleX = prefixCenterX + prefixRadius + gap;
         }
 
-        // Draw title next to prefix
+        // Adjust title position if subtitle exists
+        if (subTitle) {
+          titleY = y + height / 2 - 8;
+        }
+
+        // Draw title
         ctx.fillStyle = "black";
         ctx.font = "16px Arial";
         ctx.textAlign = "left";
         ctx.textBaseline = "middle";
-        ctx.fillText(title, titleX, y + height / 2);
+        ctx.fillText(title, titleX, titleY);
+
+        // Draw subtitle if it exists
+        if (subTitle) {
+          ctx.fillStyle = "#717171";
+          ctx.font = "500 12px Arial";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "middle";
+          ctx.fillText(subTitle, titleX, titleY + 16);
+        }
 
         if (suffixText) {
-          // draw rectangular suffix
+          // draw rectangular suffix with border radius
           const suffixWidth = 21;
           const suffixHeight = 24;
           const suffixX = x + width - suffixWidth - gap;
           const suffixY = y + (height - suffixHeight) / 2;
+          const borderRadius = 3;
+
+          ctx.beginPath();
+          ctx.moveTo(suffixX + borderRadius, suffixY);
+          ctx.lineTo(suffixX + suffixWidth - borderRadius, suffixY);
+          ctx.quadraticCurveTo(
+            suffixX + suffixWidth,
+            suffixY,
+            suffixX + suffixWidth,
+            suffixY + borderRadius
+          );
+          ctx.lineTo(
+            suffixX + suffixWidth,
+            suffixY + suffixHeight - borderRadius
+          );
+          ctx.quadraticCurveTo(
+            suffixX + suffixWidth,
+            suffixY + suffixHeight,
+            suffixX + suffixWidth - borderRadius,
+            suffixY + suffixHeight
+          );
+          ctx.lineTo(suffixX + borderRadius, suffixY + suffixHeight);
+          ctx.quadraticCurveTo(
+            suffixX,
+            suffixY + suffixHeight,
+            suffixX,
+            suffixY + suffixHeight - borderRadius
+          );
+          ctx.lineTo(suffixX, suffixY + borderRadius);
+          ctx.quadraticCurveTo(
+            suffixX,
+            suffixY,
+            suffixX + borderRadius,
+            suffixY
+          );
+          ctx.closePath();
 
           ctx.fillStyle = suffixBgColor;
-          ctx.fillRect(suffixX, suffixY, suffixWidth, suffixHeight);
+          ctx.fill();
 
           ctx.fillStyle = suffixTextColor;
           ctx.font = "500 12px Arial";
@@ -142,6 +192,7 @@ const FigmaDesign = () => {
         columns={figmaDesignColumn}
         rows={tableData.length}
         customRenderers={[renderer]}
+        rowHeight={() => 44}
       />
     </>
   );

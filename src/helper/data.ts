@@ -213,6 +213,7 @@ export const figmaDesignData: IFigmaDesignData[] = [
   {
     student: {
       title: "Vinay Pratap Singh",
+      subTitle: "ASE",
       prefixText: "VP",
       suffixText: "FE",
     },
@@ -220,12 +221,32 @@ export const figmaDesignData: IFigmaDesignData[] = [
     grade: { title: "5" },
   },
   {
-    student: { title: "Vinay Pratap Singh 1" },
+    student: {
+      title: "Abhirup Bardhan",
+      subTitle: "SE",
+      prefixText: "AB",
+      suffixText: "FE",
+    },
     score: { title: "10" },
     grade: { title: "5" },
   },
   {
-    student: { title: "Vinay Pratap Singh 2" },
+    student: {
+      title: "Satish Kumar Narava",
+      subTitle: "SE",
+      prefixText: "SK",
+      suffixText: "FE",
+    },
+    score: { title: "10" },
+    grade: { title: "5" },
+  },
+  {
+    student: {
+      title: "Soumendu Prasad Sinha",
+      subTitle: "SSE",
+      prefixText: "SP",
+      suffixText: "FE",
+    },
     score: { title: "10" },
     grade: { title: "5" },
   },
