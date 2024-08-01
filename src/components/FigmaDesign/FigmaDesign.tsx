@@ -14,7 +14,7 @@ import { IFigmaDesignCellData } from "../../helper/interface";
 
 interface ICustomCell extends CustomCell {
   kind: GridCellKind.Custom;
-  data: IFigmaDesignCellData;
+  data: IFigmaDesignCellData | string;
 }
 
 const FigmaDesign = () => {
@@ -23,18 +23,19 @@ const FigmaDesign = () => {
     (cell: Item): GridCell => {
       const [col, row] = cell;
       const dataRow = tableData[row];
-      const indexes: ("student" | "score" | "grade")[] = [
+      const indexes: ("student" | "english" | "maths" | "total")[] = [
         "student",
-        "score",
-        "grade",
+        "english",
+        "maths",
+        "total",
       ];
       const data = dataRow[indexes[col]];
       return {
         kind: GridCellKind.Custom,
-        allowOverlay: true,
-        readonly: false,
+        allowOverlay: col !== 0 ? true : false,
+        readonly: col !== 0 ? false : true,
         data: data,
-        copyData: data.title,
+        copyData: data,
       } as CustomCell;
     },
     [tableData]
@@ -51,7 +52,18 @@ const FigmaDesign = () => {
     draw: (args: DrawArgs<ICustomCell>) => {
       const { cell, ctx, rect } = args;
       const { x, y, width, height } = rect;
-      const { prefixText, subTitle, suffixText, title = "" } = cell.data;
+      let prefixText = undefined,
+        title = "",
+        subTitle = undefined,
+        suffixText = undefined;
+      if (typeof cell.data === "string") {
+        title = cell.data;
+      } else {
+        prefixText = cell?.data?.prefixText;
+        suffixText = cell?.data?.suffixText;
+        title = cell?.data?.title || "";
+        subTitle = cell?.data?.subTitle;
+      }
       const prefixBgColor = "#E3E3FC";
       const prefixTextColor = "#5050C5";
       const suffixBgColor = "#EBFFFA";
