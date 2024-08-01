@@ -44,13 +44,25 @@ const HtmlToCanvasCustomCell = () => {
         percentage = (english + maths) * 5;
       }
 
-      return {
-        kind: GridCellKind.Custom,
-        allowOverlay: col !== 0 ? true : false,
-        readonly: col !== 0 ? false : true,
-        data: col === 3 ? total : col === 4 ? percentage : data,
-        copyData: col === 3 ? total : col === 4 ? percentage : data,
-      } as CustomCell;
+      if (col === 0) {
+        return {
+          kind: GridCellKind.Custom,
+          allowOverlay: col !== 0 ? true : false,
+          readonly: col !== 0 ? false : true,
+          data: data,
+          copyData: data,
+        } as CustomCell;
+      } else {
+        return {
+          kind: GridCellKind.Number,
+          allowOverlay: col !== 0 ? true : false,
+          readonly: col !== 0 ? false : true,
+          data: Number(col === 3 ? total : col === 4 ? percentage : data),
+          displayData: String(
+            col === 3 ? total : col === 4 ? percentage : data
+          ),
+        };
+      }
     },
     [tableData]
   );
@@ -148,9 +160,6 @@ const HtmlToCanvasCustomCell = () => {
       // Convert the component to an image
       const canvas = await html2canvas(comp);
       const imgDataUrl = canvas.toDataURL("image/png");
-      const img = new Image();
-      img.src = imgDataUrl;
-      await img.decode(); // Ensure the image is loaded
 
       const myImage = imageLoader.loadOrGetImage(imgDataUrl, col, row);
       if (myImage !== undefined) {
