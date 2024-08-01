@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { figmaDesignColumn, figmaDesignData } from "../../helper/data";
 import {
   CustomCell,
@@ -18,18 +18,19 @@ interface ICustomCell extends CustomCell {
 }
 
 const FigmaDesign = () => {
-  const [tableData] = useState(figmaDesignData);
+  const [tableData, setTableData] = useState(figmaDesignData);
 
   const getCellContent = useCallback(
     (cell: Item): GridCell => {
       const [col, row] = cell;
       const dataRow = tableData[row];
-      const indexes: ("student" | "english" | "maths" | "total")[] = [
-        "student",
-        "english",
-        "maths",
-        "total",
-      ];
+      const indexes: (
+        | "student"
+        | "english"
+        | "maths"
+        | "total"
+        | "percentage"
+      )[] = ["student", "english", "maths", "total", "percentage"];
 
       const data = dataRow[indexes[col]];
       let total = 0;
@@ -55,9 +56,39 @@ const FigmaDesign = () => {
 
   const renderer: CustomRenderer<ICustomCell> = {
     kind: GridCellKind.Custom,
-    provideEditor: () => {
-      return ({ value }) => {};
-    },
+    provideEditor: () => ({
+      editor: (args) => {
+        const { target, value, onChange } = args;
+        const { width, height } = target;
+        const [input, setInput] = useState(value.data as string);
+        const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+          const { value } = event.target;
+          setInput(value);
+          onChange({
+            kind: GridCellKind.Custom,
+            data: value,
+            copyData: value,
+            allowOverlay: true,
+            readonly: false,
+          });
+        };
+        return (
+          <div
+            style={{ height, width }}
+            className="flex items-center justify-center"
+          >
+            <input
+              type="text"
+              value={input}
+              className="outline-none border-none m-2 h-5 text-center"
+              onChange={handleChange}
+            />
+          </div>
+        );
+      },
+      disablePadding: true,
+      disableStyling: true,
+    }),
     isMatch: (cell: GridCell): cell is ICustomCell => {
       return cell.kind === GridCellKind.Custom;
     },
@@ -202,14 +233,18 @@ const FigmaDesign = () => {
   };
 
   const onCellEdited = useCallback((cell: Item, newValue: EditableGridCell) => {
-    if (newValue.kind !== GridCellKind.Text) return;
-
-    // const indexes: (keyof IDataRow)[] = ["name", "company", "email", "phone"];
-    // const [col, row] = cell;
-    // const key = indexes[col];
-    // const newData = [...tableData];
-    // newData[row][key] = newValue.data;
-    // setTableData([...newData]);
+    const [col, row] = cell;
+    const indexes: (
+      | "student"
+      | "english"
+      | "maths"
+      | "total"
+      | "percentage"
+    )[] = ["student", "english", "maths", "total", "percentage"];
+    const key = indexes[col];
+    const newData = [...tableData];
+    newData[row][key] = Number(newValue.data);
+    setTableData([...newData]);
   }, []);
 
   return (
