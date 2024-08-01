@@ -19,6 +19,7 @@ interface ICustomCell extends CustomCell {
 
 const FigmaDesign = () => {
   const [tableData] = useState(figmaDesignData);
+
   const getCellContent = useCallback(
     (cell: Item): GridCell => {
       const [col, row] = cell;
@@ -29,13 +30,24 @@ const FigmaDesign = () => {
         "maths",
         "total",
       ];
+
       const data = dataRow[indexes[col]];
+      let total = 0;
+      const { english = 0, maths = 0 } = dataRow;
+      if (col === 3) {
+        total = total + english + maths;
+      }
+      let percentage = 0;
+      if (col === 4) {
+        percentage = (english + maths) * 5;
+      }
+
       return {
         kind: GridCellKind.Custom,
         allowOverlay: col !== 0 ? true : false,
         readonly: col !== 0 ? false : true,
-        data: data,
-        copyData: data,
+        data: col === 3 ? total : col === 4 ? percentage : data,
+        copyData: col === 3 ? total : col === 4 ? percentage : data,
       } as CustomCell;
     },
     [tableData]
@@ -50,14 +62,18 @@ const FigmaDesign = () => {
       return cell.kind === GridCellKind.Custom;
     },
     draw: (args: DrawArgs<ICustomCell>) => {
-      const { cell, ctx, rect } = args;
+      const { cell, ctx, rect, col } = args;
       const { x, y, width, height } = rect;
       let prefixText = undefined,
         title = "",
         subTitle = undefined,
         suffixText = undefined;
-      if (typeof cell.data === "string") {
-        title = cell.data;
+      if (typeof cell.data === "number") {
+        if (col === 4) {
+          title = cell.data + " %";
+        } else {
+          title = cell.data;
+        }
       } else {
         prefixText = cell?.data?.prefixText;
         suffixText = cell?.data?.suffixText;

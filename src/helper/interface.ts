@@ -55,7 +55,8 @@ export interface IFigmaDesignCellData {
 
 export interface IFigmaDesignData {
   student: IFigmaDesignCellData;
-  english?: string;
-  maths?: string;
-  total?: string;
+  english?: number;
+  maths?: number;
+  total?: number;
+  percentage?: number;
 }
