@@ -1,5 +1,5 @@
-import { useCallback, useRef, useState } from "react";
-import { customTableColumns, customTableData } from "../../helper/data";
+import React, { useCallback, useRef, useState } from "react";
+import { figmaDesignColumn, figmaDesignData } from "../../helper/data";
 import {
   CustomCell,
   CustomRenderer,
@@ -10,143 +10,175 @@ import {
   GridCellKind,
   Item,
 } from "@glideapps/glide-data-grid";
-import { ICustomTableData } from "../../helper/interface";
+import { IFigmaDesignCellData } from "../../helper/interface";
 import html2canvas from "html2canvas";
-
-interface ICustomCellProps {
-  kind: string;
-  value: boolean | string;
-}
 
 interface ICustomCell extends CustomCell {
   kind: GridCellKind.Custom;
-  data: ICustomCellProps;
+  data: IFigmaDesignCellData | string;
 }
 
 const HtmlToCanvasCustomCell = () => {
-  const [tableData] = useState(customTableData);
-
-  const renderer: CustomRenderer<ICustomCell> = {
-    kind: GridCellKind.Custom,
-    provideEditor: () => {
-      return ({ value, isHighlighted }) => {
-        const { value: cellValue, kind } = value.data;
-        if (kind === "checkbox") {
-          return (
-            <input
-              type="checkbox"
-              className="w-full h-full border-none outline-none"
-              autoFocus={isHighlighted}
-            />
-          );
-        } else if (kind === "select-dropdown") {
-          return (
-            <select
-              name="assignedTo"
-              id="assignedTo"
-              value={cellValue as string}
-            >
-              <option value="Abhirup Bardhan">Abhirup Bardhan</option>
-              <option value="Soumendu Prasad Sinha">
-                Soumendu Prasad Sinha
-              </option>
-              <option value="Vinay Pratap Singh">Vinay Pratap Singh</option>
-              <option value="Satish Kumar Narava">Satish Kumar Narava</option>
-            </select>
-          );
-        }
-      };
-    },
-    isMatch: (cell: GridCell): cell is ICustomCell => {
-      return cell.kind === GridCellKind.Custom;
-    },
-    draw: (args: DrawArgs<ICustomCell>) => {
-      const { ctx } = args;
-      ctx.font = "50px Arial";
-      ctx.fillText("Hello World", 10, 80);
-
-      // html2canvas(document.createElement("div")).then(
-      //   (canvas) => {
-      //     const imageUrl = canvas.toDataURL("image/png");
-
-      //     const img = new Image();
-      //     img.onload = () => {
-      //       // Draw the image on the canvas
-      //       ctx.drawImage(img, 0, 0);
-      //     };
-      //     img.src = imageUrl;
-      //   }
-      // );
-
-      return true;
-    },
-  };
+  const [tableData, setTableData] = useState(figmaDesignData);
 
   const getCellContent = useCallback(
     (cell: Item): GridCell => {
       const [col, row] = cell;
       const dataRow = tableData[row];
-      const indexes: (keyof ICustomTableData)[] = [
-        "sNo",
-        "taskName",
-        "isCompleted",
-        "assignedTo",
-      ];
-      const key = indexes[col];
-      const data = dataRow[key];
+      const indexes: (
+        | "student"
+        | "english"
+        | "maths"
+        | "total"
+        | "percentage"
+      )[] = ["student", "english", "maths", "total", "percentage"];
 
-      if (key === "sNo") {
-        return {
-          kind: GridCellKind.Number,
-          allowOverlay: true,
-          readonly: false,
-          data: data as number,
-          displayData: data.toString(),
-        };
-      } else if (key === "taskName") {
-        return {
-          kind: GridCellKind.Text,
-          allowOverlay: true,
-          readonly: false,
-          data: data as string,
-          displayData: data as string,
-        };
-      } else if (key === "isCompleted") {
-        return {
-          kind: GridCellKind.Custom,
-          allowOverlay: true,
-          readonly: false,
-          data: {
-            kind: "checkbox",
-            value: data as boolean,
-          },
-        } as CustomCell<any>;
-      } else if (key === "assignedTo") {
-        return {
-          kind: GridCellKind.Custom,
-          allowOverlay: true,
-          readonly: false,
-          data: {
-            kind: "select-dropdown",
-            value: data as string,
-          },
-        } as CustomCell<any>;
-      } else {
-        return {
-          kind: GridCellKind.Text,
-          allowOverlay: false,
-          readonly: true,
-          data: "Unknown",
-          displayData: "Unknown",
-        };
+      const data = dataRow[indexes[col]];
+      let total = 0;
+      const { english = 0, maths = 0 } = dataRow;
+      if (col === 3) {
+        total = total + english + maths;
       }
+      let percentage = 0;
+      if (col === 4) {
+        percentage = (english + maths) * 5;
+      }
+
+      return {
+        kind: GridCellKind.Custom,
+        allowOverlay: col !== 0 ? true : false,
+        readonly: col !== 0 ? false : true,
+        data: col === 3 ? total : col === 4 ? percentage : data,
+        copyData: col === 3 ? total : col === 4 ? percentage : data,
+      } as CustomCell;
     },
     [tableData]
   );
 
+  const renderer: CustomRenderer<ICustomCell> = {
+    kind: GridCellKind.Custom,
+    provideEditor: () => ({
+      editor: (args) => {
+        const { target, value, onChange } = args;
+        const { width, height } = target;
+        const [input, setInput] = useState(value.data as string);
+        const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+          const { value } = event.target;
+          setInput(value);
+          onChange({
+            kind: GridCellKind.Custom,
+            data: value,
+            copyData: value,
+            allowOverlay: true,
+            readonly: false,
+          });
+        };
+        return (
+          <div
+            style={{ height, width }}
+            className="flex items-center justify-center"
+          >
+            <input
+              type="text"
+              value={input}
+              className="outline-none border-none m-2 h-5 text-center"
+              onChange={handleChange}
+            />
+          </div>
+        );
+      },
+      disablePadding: true,
+      disableStyling: true,
+    }),
+    isMatch: (cell: GridCell): cell is ICustomCell => {
+      return cell.kind === GridCellKind.Custom;
+    },
+    draw: async (args: DrawArgs<ICustomCell>) => {
+      const { cell, ctx, rect, col, row, imageLoader } = args;
+      const { x, y, width, height } = rect;
+
+      let prefixText = undefined,
+        title = "",
+        subTitle = undefined,
+        suffixText = undefined;
+
+      if (typeof cell.data === "number") {
+        if (col === 4) {
+          title = cell.data + " %";
+        } else {
+          title = cell.data;
+        }
+      } else {
+        prefixText = cell?.data?.prefixText;
+        suffixText = cell?.data?.suffixText;
+        title = cell?.data?.title || "";
+        subTitle = cell?.data?.subTitle;
+      }
+
+      const comp = document.createElement("div");
+      comp.className =
+        "flex items-center justify-between absolute top-[10000px] right-[10000px]";
+
+      const innerComp = `
+    <div class="flex items-center gap-2" style={{width}}>
+      ${
+        prefixText
+          ? `<div class="w-6 h-6 rounded-full flex items-center justify-center bg-red-500">
+              ${prefixText}
+            </div>`
+          : ""
+      }
+      <div>
+        <h4>${title}</h4>
+        <p>${subTitle}</p>
+      </div>
+    </div>
+    ${
+      suffixText
+        ? `<div class="h-5 w-5 rounded-sm bg-red-500">${suffixText}</div>`
+        : ""
+    }
+  `;
+
+      comp.innerHTML = innerComp;
+
+      // Append the component to the body temporarily
+      document.body.appendChild(comp);
+
+      // Convert the component to an image
+      const canvas = await html2canvas(comp);
+      const imgDataUrl = canvas.toDataURL("image/png");
+      const img = new Image();
+      img.src = imgDataUrl;
+      await img.decode(); // Ensure the image is loaded
+
+      const myImage = imageLoader.loadOrGetImage(imgDataUrl, col, row);
+      if (myImage !== undefined) {
+        ctx.drawImage(myImage, x, y, width, height);
+      }
+
+      // Remove the component from the body
+      if (comp.parentNode) {
+        comp.parentNode.removeChild(comp);
+      }
+
+      return true;
+    },
+  };
+
   const onCellEdited = useCallback((cell: Item, newValue: EditableGridCell) => {
-    console.log(newValue, cell);
-    if (newValue.kind !== GridCellKind.Text) return;
+    const [col, row] = cell;
+    const indexes: (
+      | "student"
+      | "english"
+      | "maths"
+      | "total"
+      | "percentage"
+    )[] = ["student", "english", "maths", "total", "percentage"];
+    const key = indexes[col];
+    const newData = [...tableData];
+    newData[row][key] = Number(newValue.data);
+    setTableData([...newData]);
   }, []);
 
   return (
@@ -154,10 +186,10 @@ const HtmlToCanvasCustomCell = () => {
       <DataEditor
         getCellContent={getCellContent}
         onCellEdited={onCellEdited}
-        columns={customTableColumns}
+        columns={figmaDesignColumn}
         rows={tableData.length}
         customRenderers={[renderer]}
-        // cellActivationBehavior="single-click"
+        rowHeight={() => 44}
       />
     </>
   );
