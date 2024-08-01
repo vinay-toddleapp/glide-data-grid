@@ -204,9 +204,10 @@ export const customTableData: ICustomTableData[] = [
 ];
 
 export const figmaDesignColumn: IColumnsData[] = [
-  { id: "student", title: "Student Name", width: 400 },
-  { id: "score", title: "Score", group: "Term 1 total", width: 400 },
-  { id: "grade", title: "Grade (/7)", group: "Term 1 total", width: 400 },
+  { id: "student", title: "Student Name", width: 300 },
+  { id: "english", title: "English", group: "Subjects", width: 300 },
+  { id: "maths", title: "Maths", group: "Subjects", width: 300 },
+  { id: "total", title: "Total", group: "Semester 1", width: 300 },
 ];
 
 export const figmaDesignData: IFigmaDesignData[] = [
@@ -217,8 +218,8 @@ export const figmaDesignData: IFigmaDesignData[] = [
       prefixText: "VP",
       suffixText: "FE",
     },
-    score: { title: "10" },
-    grade: { title: "5" },
+    english: "7",
+    maths: "9",
   },
   {
     student: {
@@ -227,8 +228,8 @@ export const figmaDesignData: IFigmaDesignData[] = [
       prefixText: "AB",
       suffixText: "FE",
     },
-    score: { title: "10" },
-    grade: { title: "5" },
+    english: "10",
+    maths: "9",
   },
   {
     student: {
@@ -237,8 +238,8 @@ export const figmaDesignData: IFigmaDesignData[] = [
       prefixText: "SK",
       suffixText: "FE",
     },
-    score: { title: "10" },
-    grade: { title: "5" },
+    english: "8",
+    maths: "6",
   },
   {
     student: {
@@ -247,7 +248,7 @@ export const figmaDesignData: IFigmaDesignData[] = [
       prefixText: "SP",
       suffixText: "FE",
     },
-    score: { title: "10" },
-    grade: { title: "5" },
+    english: "6",
+    maths: "9",
   },
 ];

@@ -55,6 +55,7 @@ export interface IFigmaDesignCellData {
 
 export interface IFigmaDesignData {
   student: IFigmaDesignCellData;
-  score: IFigmaDesignCellData;
-  grade: IFigmaDesignCellData;
+  english?: string;
+  maths?: string;
+  total?: string;
 }
