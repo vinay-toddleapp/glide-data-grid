@@ -6,6 +6,7 @@ import DisableEditAndErrorState from "./components/DisableEditAndErrorState/Disa
 import CustomCellExample from "./components/CustomCell/CustomCell";
 import GroupHeader from "./components/GroupHeader/GroupHeader";
 import HtmlToCanvasCustomCell from "./components/HtmlToCanvasCustomCell/HtmlToCanvasCustomCell";
+import FigmaDesign from "./components/FigmaDesign/FigmaDesign";
 
 const App = () => {
   const demos = {
@@ -43,6 +44,11 @@ const App = () => {
       name: "Rendering custom component using `html to canvas` library",
       value: "htmlToCanvasCustomCell",
       component: <HtmlToCanvasCustomCell />,
+    },
+    figmaDesign: {
+      name: "Replica of figma design data grid",
+      value: "figmaDesign",
+      component: <FigmaDesign />,
     },
   };
   const allDemo = Object.values(demos);

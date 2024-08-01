@@ -31,6 +31,8 @@ export interface IDisabledAndEditCell {
 export interface IColumnsData {
   title: string;
   id: string;
+  width?: number;
+  group?: string;
 }
 
 export interface ICustomTableData {
@@ -42,4 +44,17 @@ export interface ICustomTableData {
     | "Satish Kumar Narava"
     | "Abhirup Bardhan"
     | "Soumendu Prasad Sinha";
+}
+
+export interface IFigmaDesignCellData {
+  prefixText?: string;
+  title?: string;
+  subTitle?: string;
+  suffixText?: string;
+}
+
+export interface IFigmaDesignData {
+  student: IFigmaDesignCellData;
+  score: IFigmaDesignCellData;
+  grade: IFigmaDesignCellData;
 }

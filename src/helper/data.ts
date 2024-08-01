@@ -3,6 +3,7 @@ import {
   ICustomTableData,
   IDataRow,
   IDisabledAndEditCell,
+  IFigmaDesignData,
 } from "./interface";
 
 export const data: IDataRow[] = [
@@ -199,5 +200,33 @@ export const customTableData: ICustomTableData[] = [
     taskName: "Bug Fixing",
     isCompleted: true,
     assignedTo: "Satish Kumar Narava",
+  },
+];
+
+export const figmaDesignColumn: IColumnsData[] = [
+  { id: "student", title: "Student Name", width: 400 },
+  { id: "score", title: "Score", group: "Term 1 total", width: 400 },
+  { id: "grade", title: "Grade (/7)", group: "Term 1 total", width: 400 },
+];
+
+export const figmaDesignData: IFigmaDesignData[] = [
+  {
+    student: {
+      title: "Vinay Pratap Singh",
+      prefixText: "VP",
+      suffixText: "FE",
+    },
+    score: { title: "10" },
+    grade: { title: "5" },
+  },
+  {
+    student: { title: "Vinay Pratap Singh 1" },
+    score: { title: "10" },
+    grade: { title: "5" },
+  },
+  {
+    student: { title: "Vinay Pratap Singh 2" },
+    score: { title: "10" },
+    grade: { title: "5" },
   },
 ];
