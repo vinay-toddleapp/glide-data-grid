@@ -124,30 +124,20 @@ const CustomCellWithSvg = () => {
     </svg>
   `;
 
-      spriteManager.drawSprite(
-        svgContent,
-        "normal",
-        ctx,
-        x + 100,
-        y + 200,
-        400,
-        theme
-      );
+      const blob = new Blob([svgContent], { type: "image/svg+xml" });
+      const url = URL.createObjectURL(blob);
 
-      // const blob = new Blob([svgContent], { type: "image/svg+xml" });
-      // const url = URL.createObjectURL(blob);
+      const img = new Image();
+      img.onload = () => {
+        const imgSize = 70;
+        const offsetX = x + width / 2 + imgSize;
+        const offsetY = y + height / 2 + imgSize;
 
-      // const img = new Image();
-      // img.onload = () => {
-      //   const imgSize = 70; // The size of the SVG image
-      //   const offsetX = x + width / 2 + imgSize; // Centering the image horizontally
-      //   const offsetY = y + height / 2 + imgSize; // Centering the image vertically
+        ctx.drawImage(img, offsetX, offsetY, imgSize, imgSize);
+        URL.revokeObjectURL(url);
+      };
 
-      //   ctx.drawImage(img, offsetX, offsetY, imgSize, imgSize);
-      //   URL.revokeObjectURL(url);
-      // };
-
-      // img.src = url;
+      img.src = url;
 
       return true;
     },

@@ -4,6 +4,7 @@ import {
   IDataRow,
   IDisabledAndEditCell,
   IFigmaDesignData,
+  IFigmaDesignData2,
 } from "./interface";
 
 export const data: IDataRow[] = [
@@ -251,5 +252,70 @@ export const figmaDesignData: IFigmaDesignData[] = [
     },
     english: 6,
     maths: 9,
+  },
+];
+
+export const figmaDesignColumn2: IColumnsData[] = [
+  { id: "student", title: "Student name", width: 217 },
+  { id: "/50", title: "(/50)", group: "English", width: 90 },
+  { id: "comment", title: "Comment", group: "English", width: 90 },
+];
+
+export const figmaDesignData2: IFigmaDesignData2[] = [
+  {
+    student: {
+      title: "Vinay Pratap",
+      subTitle: "ASE",
+      prefixText: "VP",
+      prefixBgColor: "#E3E3FC",
+      prefixTextColor: "#5050C5",
+      suffixText: "FE",
+      suffixBgColor: "#EBFFFA",
+      suffixTextColor: "#1C725D",
+    },
+    english: 45,
+    comment: "",
+  },
+  {
+    student: {
+      title: "Satish Kumar",
+      subTitle: "SE",
+      prefixText: "SK",
+      prefixBgColor: "#E3E3FC",
+      prefixTextColor: "#5050C5",
+      suffixText: "FE",
+      suffixBgColor: "#EBFFFA",
+      suffixTextColor: "#1C725D",
+    },
+    english: 45,
+    comment: "",
+  },
+  {
+    student: {
+      title: "Abhirup Bardhan",
+      subTitle: "SE",
+      prefixText: "AB",
+      prefixBgColor: "#E3E3FC",
+      prefixTextColor: "#5050C5",
+      suffixText: "FE",
+      suffixBgColor: "#EBFFFA",
+      suffixTextColor: "#1C725D",
+    },
+    english: 45,
+    comment: "",
+  },
+  {
+    student: {
+      title: "Soumendu",
+      subTitle: "SSE",
+      prefixText: "SP",
+      prefixBgColor: "#E3E3FC",
+      prefixTextColor: "#5050C5",
+      suffixText: "FE",
+      suffixBgColor: "#EBFFFA",
+      suffixTextColor: "#1C725D",
+    },
+    english: 45,
+    comment: "",
   },
 ];

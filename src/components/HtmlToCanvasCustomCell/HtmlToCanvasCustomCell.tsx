@@ -156,7 +156,7 @@ const HtmlToCanvasCustomCell = () => {
 
       comp.innerHTML = innerComp;
       document.body.appendChild(comp);
-      const canvas = await html2canvas(comp);
+      const canvas = await html2canvas(comp, { scale: 1 });
       const imgDataUrl = canvas.toDataURL("image/png");
       const img = document.createElement("img");
       img.src = imgDataUrl;

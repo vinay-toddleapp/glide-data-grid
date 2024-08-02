@@ -8,6 +8,7 @@ import GroupHeader from "./components/GroupHeader/GroupHeader";
 import HtmlToCanvasCustomCell from "./components/HtmlToCanvasCustomCell/HtmlToCanvasCustomCell";
 import FigmaDesign from "./components/FigmaDesign/FigmaDesign";
 import CustomCellWithSvg from "./components/CustomCellWithSvg/CustomCellWithSvg";
+import FigmaDesign2 from "./components/FigmaDesign2/FigmaDesign2";
 
 const App = () => {
   const demos = {
@@ -55,6 +56,11 @@ const App = () => {
       name: "Custom cell using SVG",
       value: "customCellWithSVG",
       component: <CustomCellWithSvg />,
+    },
+    figmaDesign2: {
+      name: "Final clone of figma design",
+      value: "figmaDesign2",
+      component: <FigmaDesign2 />,
     },
   };
   const allDemo = Object.values(demos);

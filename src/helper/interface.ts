@@ -60,3 +60,20 @@ export interface IFigmaDesignData {
   total?: number;
   percentage?: number;
 }
+
+export interface IStudentData {
+  prefixText: string;
+  prefixTextColor: string;
+  prefixBgColor: string;
+  title: string;
+  subTitle: string;
+  suffixText: string;
+  suffixTextColor: string;
+  suffixBgColor: string;
+}
+
+export interface IFigmaDesignData2 {
+  student: IStudentData;
+  english: number;
+  comment: string;
+}
