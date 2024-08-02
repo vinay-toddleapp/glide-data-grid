@@ -11,14 +11,14 @@ import {
   Item,
 } from "@glideapps/glide-data-grid";
 import { IFigmaDesignCellData } from "../../helper/interface";
-import html2canvas from "html2canvas";
+import mySvg from "../../assets/prefix.svg";
 
 interface ICustomCell extends CustomCell {
   kind: GridCellKind.Custom;
   data: IFigmaDesignCellData | string;
 }
 
-const HtmlToCanvasCustomCell = () => {
+const CustomCellWithSvg = () => {
   const [tableData, setTableData] = useState(figmaDesignData);
 
   const getCellContent = useCallback(
@@ -106,72 +106,48 @@ const HtmlToCanvasCustomCell = () => {
       return cell.kind === GridCellKind.Custom;
     },
     draw: async (args: DrawArgs<ICustomCell>) => {
-      const { cell, ctx, rect, col, row, imageLoader } = args;
+      const { ctx, rect, spriteManager, theme } = args;
       const { x, y, width, height } = rect;
 
-      let prefixText = undefined,
-        title = "",
-        subTitle = undefined,
-        suffixText = undefined;
+      // const {
+      //   prefixText,
+      //   subTitle,
+      //   suffixText,
+      //   title = "",
+      // } = cell.data as IFigmaDesignCellData;
 
-      if (typeof cell.data === "number") {
-        if (col === 4) {
-          title = cell.data + " %";
-        } else {
-          title = cell.data;
-        }
-      } else {
-        prefixText = cell?.data?.prefixText;
-        suffixText = cell?.data?.suffixText;
-        title = cell?.data?.title || "";
-        subTitle = cell?.data?.subTitle;
-      }
-
-      const comp = document.createElement("div");
-      comp.style.width = width + "px";
-      comp.style.height = height + "px";
-      comp.className = "flex items-center justify-between";
-      // absolute top-[10000px] right-[10000px]
-
-      const innerComp = `
-    <div class="flex items-center gap-2" style={{width}}>
-      ${
-        prefixText
-          ? `<div class="w-6 h-6 rounded-full flex items-center justify-center bg-red-500">
-              ${prefixText}
-            </div>`
-          : ""
-      }
-      <div>
-        <h4>${title}</h4>
-        <p>${subTitle}</p>
-      </div>
-    </div>
-    ${
-      suffixText
-        ? `<div class="h-5 w-5 rounded-sm bg-red-500">${suffixText}</div>`
-        : ""
-    }
+      // Define the SVG content as a string
+      const svgContent = `
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="32" height="32" rx="16" fill="#FFE0E6" />
+      <path d="M9.64108 11.504H12.9531C13.2731 11.504 13.5891 11.544 13.9011 11.624C14.2131 11.696 14.4891 11.82 14.7291 11.996C14.9771 12.164 15.1771 12.384 15.3291 12.656C15.4811 12.928 15.5571 13.256 15.5571 13.64C15.5571 14.12 15.4211 14.516 15.1491 14.828C14.8771 15.14 14.5211 15.364 14.0811 15.5V15.524C14.6171 15.596 15.0571 15.804 15.4011 16.148C15.7451 16.492 15.9171 16.952 15.9171 17.528C15.9171 17.992 15.8251 18.384 15.6411 18.704C15.4571 19.016 15.2131 19.268 14.9091 19.46C14.6131 19.652 14.2691 19.792 13.8771 19.88C13.4931 19.96 13.1011 20 12.7011 20H9.64108V11.504ZM11.1531 14.96H12.4971C13.0011 14.96 13.3851 14.86 13.6491 14.66C13.9131 14.46 14.0451 14.176 14.0451 13.808C14.0451 13.424 13.9091 13.152 13.6371 12.992C13.3651 12.832 12.9411 12.752 12.3651 12.752H11.1531V14.96ZM11.1531 18.728H12.5091C12.7011 18.728 12.9091 18.716 13.1331 18.692C13.3571 18.66 13.5611 18.6 13.7451 18.512C13.9371 18.424 14.0931 18.296 14.2131 18.128C14.3411 17.96 14.4051 17.736 14.4051 17.456C14.4051 17.008 14.2531 16.696 13.9491 16.52C13.6451 16.344 13.1851 16.256 12.5691 16.256H11.1531V18.728ZM19.1266 12.824H16.5226V11.504H23.2426V12.824H20.6386V20H19.1266V12.824Z" fill="#B04464" />
+    </svg>
   `;
 
-      comp.innerHTML = innerComp;
-      document.body.appendChild(comp);
-      const canvas = await html2canvas(comp);
-      const imgDataUrl = canvas.toDataURL("image/png");
-      const img = document.createElement("img");
-      img.src = imgDataUrl;
-      document.body.appendChild(img);
-      document.body.appendChild(comp);
-      document.body.appendChild(canvas);
+      spriteManager.drawSprite(
+        svgContent,
+        "normal",
+        ctx,
+        x + 100,
+        y + 200,
+        400,
+        theme
+      );
 
-      const myImage = imageLoader.loadOrGetImage(imgDataUrl, col, row);
-      if (myImage !== undefined) {
-        ctx.drawImage(myImage, x, y, width, height);
-      }
+      // const blob = new Blob([svgContent], { type: "image/svg+xml" });
+      // const url = URL.createObjectURL(blob);
 
-      if (comp.parentNode) {
-        // comp.parentNode.removeChild(comp);
-      }
+      // const img = new Image();
+      // img.onload = () => {
+      //   const imgSize = 70; // The size of the SVG image
+      //   const offsetX = x + width / 2 + imgSize; // Centering the image horizontally
+      //   const offsetY = y + height / 2 + imgSize; // Centering the image vertically
+
+      //   ctx.drawImage(img, offsetX, offsetY, imgSize, imgSize);
+      //   URL.revokeObjectURL(url);
+      // };
+
+      // img.src = url;
 
       return true;
     },
@@ -206,4 +182,4 @@ const HtmlToCanvasCustomCell = () => {
   );
 };
 
-export default HtmlToCanvasCustomCell;
+export default CustomCellWithSvg;

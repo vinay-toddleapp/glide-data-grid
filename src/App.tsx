@@ -7,6 +7,7 @@ import CustomCellExample from "./components/CustomCell/CustomCell";
 import GroupHeader from "./components/GroupHeader/GroupHeader";
 import HtmlToCanvasCustomCell from "./components/HtmlToCanvasCustomCell/HtmlToCanvasCustomCell";
 import FigmaDesign from "./components/FigmaDesign/FigmaDesign";
+import CustomCellWithSvg from "./components/CustomCellWithSvg/CustomCellWithSvg";
 
 const App = () => {
   const demos = {
@@ -49,6 +50,11 @@ const App = () => {
       name: "Replica of figma design data grid",
       value: "figmaDesign",
       component: <FigmaDesign />,
+    },
+    customCellWithSVG: {
+      name: "Custom cell using SVG",
+      value: "customCellWithSVG",
+      component: <CustomCellWithSvg />,
     },
   };
   const allDemo = Object.values(demos);
