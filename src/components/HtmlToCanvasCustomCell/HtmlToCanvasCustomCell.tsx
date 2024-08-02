@@ -128,8 +128,10 @@ const HtmlToCanvasCustomCell = () => {
       }
 
       const comp = document.createElement("div");
-      comp.className =
-        "flex items-center justify-between absolute top-[10000px] right-[10000px]";
+      comp.style.width = width + "px";
+      comp.style.height = height + "px";
+      comp.className = "flex items-center justify-between";
+      // absolute top-[10000px] right-[10000px]
 
       const innerComp = `
     <div class="flex items-center gap-2" style={{width}}>
@@ -153,22 +155,22 @@ const HtmlToCanvasCustomCell = () => {
   `;
 
       comp.innerHTML = innerComp;
-
-      // Append the component to the body temporarily
       document.body.appendChild(comp);
-
-      // Convert the component to an image
       const canvas = await html2canvas(comp);
       const imgDataUrl = canvas.toDataURL("image/png");
+      const img = document.createElement("img");
+      img.src = imgDataUrl;
+      document.body.appendChild(img);
+      document.body.appendChild(comp);
+      document.body.appendChild(canvas);
 
       const myImage = imageLoader.loadOrGetImage(imgDataUrl, col, row);
       if (myImage !== undefined) {
         ctx.drawImage(myImage, x, y, width, height);
       }
 
-      // Remove the component from the body
       if (comp.parentNode) {
-        comp.parentNode.removeChild(comp);
+        // comp.parentNode.removeChild(comp);
       }
 
       return true;
