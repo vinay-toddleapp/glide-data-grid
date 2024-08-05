@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { figmaDesignColumn2, figmaDesignData2 } from "../../helper/data";
 import {
   CustomCell,
@@ -21,18 +21,7 @@ interface ICustomCell extends CustomCell {
 const FigmaDesign2 = () => {
   const [tableData] = useState(figmaDesignData2);
 
-  const lastArgsRef = useRef();
-  const lastDrawRef = useRef();
-  const spriteManager = useMemo(
-    () =>
-      new SpriteManager(IconMap, () => {
-        lastArgsRef.current = undefined;
-        if (lastDrawRef.current) {
-          // lastDrawRef.current();
-        }
-      }),
-    [IconMap]
-  );
+  const spriteManager = useMemo(() => new SpriteManager(IconMap, () => {}), []);
 
   const getCellContent = useCallback(
     (cell: Item): GridCell => {
@@ -40,6 +29,7 @@ const FigmaDesign2 = () => {
       const dataRow = tableData[row];
       const indexes: (keyof IFigmaDesignData2)[] = [
         "student",
+        "studentImage",
         "english",
         "comment",
       ];
@@ -56,13 +46,21 @@ const FigmaDesign2 = () => {
         };
       } else if (col === 1) {
         return {
+          kind: GridCellKind.Custom,
+          allowOverlay: false,
+          readonly: true,
+          data: data,
+          copyData: data.toString(),
+        };
+      } else if (col === 2) {
+        return {
           kind: GridCellKind.Number,
           allowOverlay: true,
           readonly: false,
           data: data as number,
           displayData: String(data) || "unknown",
         };
-      } else if (col === 2) {
+      } else if (col === 3) {
         return {
           kind: GridCellKind.Custom,
           allowOverlay: false,
@@ -94,7 +92,7 @@ const FigmaDesign2 = () => {
       return cell.kind === GridCellKind.Custom;
     },
     draw: (args: DrawArgs<ICustomCell>) => {
-      const { cell, ctx, rect, theme } = args;
+      const { cell, ctx, rect, theme, col } = args;
       const { x, y, width, height } = rect;
       const {
         prefixBgColor,
@@ -105,18 +103,15 @@ const FigmaDesign2 = () => {
         suffixText,
         suffixTextColor,
         title,
-        kind,
       } = cell.data;
 
-      if (kind !== "student") {
-        // drawImage(
-        //   args,
-        //   [
-        //     "https://cdn0.iconfinder.com/data/icons/social-media-logo-4/32/Social_Media_instagram_comment-512.png",
-        //   ],
-        //   5,
-        //   "center"
-        // );
+      if (col === 1) {
+        const imageUrl = String(cell.data);
+        drawImage(args, [imageUrl], 5, "center");
+        return;
+      }
+
+      if (col === 3) {
         spriteManager.drawSprite(
           "comment",
           "normal",

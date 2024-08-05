@@ -62,7 +62,6 @@ export interface IFigmaDesignData {
 }
 
 export interface IStudentData {
-  kind: string;
   prefixText: string;
   prefixTextColor: string;
   prefixBgColor: string;
@@ -75,6 +74,7 @@ export interface IStudentData {
 
 export interface IFigmaDesignData2 {
   student: IStudentData;
+  studentImage: string;
   english: number;
   comment: string;
 }

@@ -256,7 +256,13 @@ export const figmaDesignData: IFigmaDesignData[] = [
 ];
 
 export const figmaDesignColumn2: IColumnsData[] = [
-  { id: "student", title: "Student name", width: 217 },
+  { id: "student", title: "Student name", group: "Student", width: 217 },
+  {
+    id: "studentImage",
+    title: "Student profile",
+    group: "Student",
+    width: 217,
+  },
   { id: "/50", title: "(/50)", group: "English", width: 90 },
   { id: "comment", title: "Comment", group: "English", width: 90 },
 ];
@@ -264,7 +270,6 @@ export const figmaDesignColumn2: IColumnsData[] = [
 export const figmaDesignData2: IFigmaDesignData2[] = [
   {
     student: {
-      kind: "student",
       title: "Vinay Pratap",
       subTitle: "ASE",
       prefixText: "VP",
@@ -276,10 +281,11 @@ export const figmaDesignData2: IFigmaDesignData2[] = [
     },
     english: 41,
     comment: "",
+    studentImage:
+      "https://lh3.googleusercontent.com/a/ACg8ocJRLhubw1EJL_Qx2AVIsFQ8KzffgCGXSBjJRxn9AqEwnGhrERA=s192-c-mo",
   },
   {
     student: {
-      kind: "student",
       title: "Satish Kumar",
       subTitle: "SE",
       prefixText: "SK",
@@ -291,10 +297,11 @@ export const figmaDesignData2: IFigmaDesignData2[] = [
     },
     english: 42,
     comment: "",
+    studentImage:
+      "https://lh3.googleusercontent.com/a/ACg8ocJRLhubw1EJL_Qx2AVIsFQ8KzffgCGXSBjJRxn9AqEwnGhrERA=s192-c-mo",
   },
   {
     student: {
-      kind: "student",
       title: "Abhirup Bardhan",
       subTitle: "SE",
       prefixText: "AB",
@@ -306,10 +313,11 @@ export const figmaDesignData2: IFigmaDesignData2[] = [
     },
     english: 43,
     comment: "",
+    studentImage:
+      "https://lh3.googleusercontent.com/a/ACg8ocJRLhubw1EJL_Qx2AVIsFQ8KzffgCGXSBjJRxn9AqEwnGhrERA=s192-c-mo",
   },
   {
     student: {
-      kind: "student",
       title: "Soumendu",
       subTitle: "SSE",
       prefixText: "SP",
@@ -321,5 +329,7 @@ export const figmaDesignData2: IFigmaDesignData2[] = [
     },
     english: 44,
     comment: "",
+    studentImage:
+      "https://lh3.googleusercontent.com/a/ACg8ocJRLhubw1EJL_Qx2AVIsFQ8KzffgCGXSBjJRxn9AqEwnGhrERA=s192-c-mo",
   },
 ];
