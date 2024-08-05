@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { figmaDesignColumn2, figmaDesignData2 } from "../../helper/data";
 import {
   CustomCell,
@@ -11,6 +11,7 @@ import {
 } from "@glideapps/glide-data-grid";
 import { IFigmaDesignData2, IStudentData } from "../../helper/interface";
 import { drawImage } from "../../helper/methods";
+import { IconMap, SpriteManager } from "../../helper/Sprite/SpriteManager";
 
 interface ICustomCell extends CustomCell {
   kind: GridCellKind.Custom;
@@ -19,6 +20,19 @@ interface ICustomCell extends CustomCell {
 
 const FigmaDesign2 = () => {
   const [tableData] = useState(figmaDesignData2);
+
+  const lastArgsRef = useRef();
+  const lastDrawRef = useRef();
+  const spriteManager = useMemo(
+    () =>
+      new SpriteManager(IconMap, () => {
+        lastArgsRef.current = undefined;
+        if (lastDrawRef.current) {
+          // lastDrawRef.current();
+        }
+      }),
+    [IconMap]
+  );
 
   const getCellContent = useCallback(
     (cell: Item): GridCell => {
@@ -80,7 +94,7 @@ const FigmaDesign2 = () => {
       return cell.kind === GridCellKind.Custom;
     },
     draw: (args: DrawArgs<ICustomCell>) => {
-      const { cell, ctx, rect } = args;
+      const { cell, ctx, rect, theme } = args;
       const { x, y, width, height } = rect;
       const {
         prefixBgColor,
@@ -95,13 +109,22 @@ const FigmaDesign2 = () => {
       } = cell.data;
 
       if (kind !== "student") {
-        drawImage(
-          args,
-          [
-            "https://i.pinimg.com/236x/6d/f3/e0/6df3e08cb07201b5b0d2e99f88585b9a.jpg",
-          ],
-          5,
-          "center"
+        // drawImage(
+        //   args,
+        //   [
+        //     "https://cdn0.iconfinder.com/data/icons/social-media-logo-4/32/Social_Media_instagram_comment-512.png",
+        //   ],
+        //   5,
+        //   "center"
+        // );
+        spriteManager.drawSprite(
+          "comment",
+          "normal",
+          ctx,
+          x + width / 2 - 10,
+          y + height / 2 - 10,
+          20,
+          theme
         );
         return;
       }
