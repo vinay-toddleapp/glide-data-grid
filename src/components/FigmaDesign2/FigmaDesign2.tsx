@@ -84,14 +84,14 @@ const FigmaDesign2 = () => {
         title,
       } = cell.data;
 
+      const paddingX = 8;
       const gap = 8;
-      let titleX = x + gap;
-      let titleY = y + height / 2;
+      const centerY = y + height / 2;
 
-      // draw circular prefix
+      // Draw circular prefix
       const prefixRadius = 16;
-      const prefixCenterX = x + prefixRadius + gap;
-      const prefixCenterY = y + height / 2;
+      const prefixCenterX = x + paddingX + prefixRadius;
+      const prefixCenterY = centerY;
 
       ctx.beginPath();
       ctx.arc(prefixCenterX, prefixCenterY, prefixRadius, 0, Math.PI * 2);
@@ -105,30 +105,43 @@ const FigmaDesign2 = () => {
       ctx.textBaseline = "middle";
       ctx.fillText(prefixText, prefixCenterX, prefixCenterY);
 
-      titleX = prefixCenterX + prefixRadius + gap;
+      const titleX = prefixCenterX + prefixRadius + gap;
 
-      // Adjust title position
-      titleY = y + height / 2 - 8;
+      // Measure title and subtitle heights
+      ctx.font = "16px Arial";
+      const titleMetrics = ctx.measureText(title);
+      const titleHeight =
+        titleMetrics.actualBoundingBoxAscent +
+        titleMetrics.actualBoundingBoxDescent;
+
+      ctx.font = "500 12px Arial";
+      const subTitleMetrics = ctx.measureText(subTitle);
+      const subTitleHeight =
+        subTitleMetrics.actualBoundingBoxAscent +
+        subTitleMetrics.actualBoundingBoxDescent;
+
+      const totalTextHeight = titleHeight + subTitleHeight + gap;
+      const textStartY = centerY - totalTextHeight / 2;
 
       // Draw title
       ctx.fillStyle = "black";
       ctx.font = "16px Arial";
       ctx.textAlign = "left";
-      ctx.textBaseline = "middle";
-      ctx.fillText(title, titleX, titleY);
+      ctx.textBaseline = "top";
+      ctx.fillText(title, titleX, textStartY);
 
       // Draw subtitle
       ctx.fillStyle = "#717171";
       ctx.font = "500 12px Arial";
       ctx.textAlign = "left";
-      ctx.textBaseline = "middle";
-      ctx.fillText(subTitle, titleX, titleY + 16);
+      ctx.textBaseline = "top";
+      ctx.fillText(subTitle, titleX, textStartY + titleHeight + gap);
 
-      // draw rectangular suffix with border radius
+      // Draw rectangular suffix with border radius
       const suffixWidth = 21;
       const suffixHeight = 24;
-      const suffixX = x + width - suffixWidth - gap;
-      const suffixY = y + (height - suffixHeight) / 2;
+      const suffixX = x + width - paddingX - suffixWidth;
+      const suffixY = centerY - suffixHeight / 2;
       const borderRadius = 3;
 
       ctx.beginPath();
