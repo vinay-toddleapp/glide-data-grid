@@ -273,7 +273,7 @@ export const figmaDesignData2: IFigmaDesignData2[] = [
       suffixBgColor: "#EBFFFA",
       suffixTextColor: "#1C725D",
     },
-    english: 45,
+    english: 41,
     comment: "",
   },
   {
@@ -287,7 +287,7 @@ export const figmaDesignData2: IFigmaDesignData2[] = [
       suffixBgColor: "#EBFFFA",
       suffixTextColor: "#1C725D",
     },
-    english: 45,
+    english: 42,
     comment: "",
   },
   {
@@ -301,7 +301,7 @@ export const figmaDesignData2: IFigmaDesignData2[] = [
       suffixBgColor: "#EBFFFA",
       suffixTextColor: "#1C725D",
     },
-    english: 45,
+    english: 43,
     comment: "",
   },
   {
@@ -315,7 +315,7 @@ export const figmaDesignData2: IFigmaDesignData2[] = [
       suffixBgColor: "#EBFFFA",
       suffixTextColor: "#1C725D",
     },
-    english: 45,
+    english: 44,
     comment: "",
   },
 ];
