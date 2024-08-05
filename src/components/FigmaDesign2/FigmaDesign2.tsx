@@ -7,7 +7,10 @@ import {
   DrawArgs,
   GridCell,
   GridCellKind,
+  GridColumn,
   Item,
+  Rectangle,
+  Theme,
 } from "@glideapps/glide-data-grid";
 import { IFigmaDesignData2, IStudentData } from "../../helper/interface";
 import { drawImage } from "../../helper/methods";
@@ -19,7 +22,8 @@ interface ICustomCell extends CustomCell {
 }
 
 const FigmaDesign2 = () => {
-  const [tableData] = useState(figmaDesignData2);
+  const [tableData, setTableData] = useState(figmaDesignData2);
+  const [cols, setCols] = useState(figmaDesignColumn2);
 
   const spriteManager = useMemo(() => new SpriteManager(IconMap, () => {}), []);
 
@@ -230,14 +234,30 @@ const FigmaDesign2 = () => {
 
   const onCellEdited = useCallback(() => {}, []);
 
+  const onColumnResize = useCallback(
+    (col: GridColumn, newSize: number) => {
+      const id = col.id;
+      const newColsData = [...cols];
+      for (const col of newColsData) {
+        if (col.id === id) {
+          col.width = newSize;
+          break;
+        }
+      }
+      setCols([...newColsData]);
+    },
+    [cols]
+  );
+
   return (
     <DataEditor
       getCellContent={getCellContent}
       onCellEdited={onCellEdited}
-      columns={figmaDesignColumn2}
+      columns={cols}
       rows={tableData.length}
       customRenderers={[renderer]}
       rowHeight={44}
+      onColumnResize={onColumnResize}
     />
   );
 };
