@@ -264,6 +264,7 @@ export const figmaDesignColumn2: IColumnsData[] = [
 export const figmaDesignData2: IFigmaDesignData2[] = [
   {
     student: {
+      kind: "student",
       title: "Vinay Pratap",
       subTitle: "ASE",
       prefixText: "VP",
@@ -278,6 +279,7 @@ export const figmaDesignData2: IFigmaDesignData2[] = [
   },
   {
     student: {
+      kind: "student",
       title: "Satish Kumar",
       subTitle: "SE",
       prefixText: "SK",
@@ -292,6 +294,7 @@ export const figmaDesignData2: IFigmaDesignData2[] = [
   },
   {
     student: {
+      kind: "student",
       title: "Abhirup Bardhan",
       subTitle: "SE",
       prefixText: "AB",
@@ -306,6 +309,7 @@ export const figmaDesignData2: IFigmaDesignData2[] = [
   },
   {
     student: {
+      kind: "student",
       title: "Soumendu",
       subTitle: "SSE",
       prefixText: "SP",

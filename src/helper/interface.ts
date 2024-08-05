@@ -62,6 +62,7 @@ export interface IFigmaDesignData {
 }
 
 export interface IStudentData {
+  kind: string;
   prefixText: string;
   prefixTextColor: string;
   prefixBgColor: string;

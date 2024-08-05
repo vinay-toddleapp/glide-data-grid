@@ -10,6 +10,7 @@ import {
   Item,
 } from "@glideapps/glide-data-grid";
 import { IFigmaDesignData2, IStudentData } from "../../helper/interface";
+import { drawImage } from "../../helper/methods";
 
 interface ICustomCell extends CustomCell {
   kind: GridCellKind.Custom;
@@ -47,6 +48,14 @@ const FigmaDesign2 = () => {
           data: data as number,
           displayData: String(data) || "unknown",
         };
+      } else if (col === 2) {
+        return {
+          kind: GridCellKind.Custom,
+          allowOverlay: false,
+          readonly: true,
+          data: data,
+          copyData: data.toString(),
+        };
       } else {
         return {
           kind: GridCellKind.Text,
@@ -82,7 +91,20 @@ const FigmaDesign2 = () => {
         suffixText,
         suffixTextColor,
         title,
+        kind,
       } = cell.data;
+
+      if (kind !== "student") {
+        drawImage(
+          args,
+          [
+            "https://i.pinimg.com/236x/6d/f3/e0/6df3e08cb07201b5b0d2e99f88585b9a.jpg",
+          ],
+          5,
+          "center"
+        );
+        return;
+      }
 
       const paddingX = 8;
       const gap = 8;
