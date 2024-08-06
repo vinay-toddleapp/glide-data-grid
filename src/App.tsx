@@ -9,6 +9,7 @@ import HtmlToCanvasCustomCell from "./components/HtmlToCanvasCustomCell/HtmlToCa
 import FigmaDesign from "./components/FigmaDesign/FigmaDesign";
 import CustomCellWithSvg from "./components/CustomCellWithSvg/CustomCellWithSvg";
 import FigmaDesign2 from "./components/FigmaDesign2/FigmaDesign2";
+import GradeOne from "./components/GradeOne/GradeOne";
 
 const App = () => {
   const demos = {
@@ -61,6 +62,11 @@ const App = () => {
       name: "Final clone of figma design",
       value: "figmaDesign2",
       component: <FigmaDesign2 />,
+    },
+    gradeOne: {
+      name: "Grade 1 figma page clone",
+      value: "gradeOne",
+      component: <GradeOne />,
     },
   };
   const allDemo = Object.values(demos);

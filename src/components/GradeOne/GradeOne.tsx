@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { figmaDesignColumn2, figmaDesignData2 } from "../../helper/data";
+import { gradeOneColumn, gradeOneData } from "../../helper/data";
 import {
   CustomCell,
   CustomRenderer,
@@ -10,8 +10,7 @@ import {
   GridColumn,
   Item,
 } from "@glideapps/glide-data-grid";
-import { IFigmaDesignData2, IStudentData } from "../../helper/interface";
-import { drawImage } from "../../helper/methods";
+import { IGradeOneData, IStudentData } from "../../helper/interface";
 import { IconMap, SpriteManager } from "../../helper/Sprite/SpriteManager";
 
 interface ICustomCell extends CustomCell {
@@ -19,9 +18,9 @@ interface ICustomCell extends CustomCell {
   data: IStudentData;
 }
 
-const FigmaDesign2 = () => {
-  const [tableData] = useState(figmaDesignData2);
-  const [cols, setCols] = useState(figmaDesignColumn2);
+const GradeOne = () => {
+  const [tableData] = useState(gradeOneData);
+  const [cols, setCols] = useState(gradeOneColumn);
 
   const spriteManager = useMemo(() => new SpriteManager(IconMap, () => {}), []);
 
@@ -29,54 +28,58 @@ const FigmaDesign2 = () => {
     (cell: Item): GridCell => {
       const [col, row] = cell;
       const dataRow = tableData[row];
-      const indexes: (keyof IFigmaDesignData2)[] = [
+      const indexes: (keyof IGradeOneData)[] = [
         "student",
-        "studentImage",
-        "english",
-        "comment",
+        "term1TotalScore",
+        "term1TotalGrade",
+        "classwork1Marks",
+        "classwork1Comment",
+        "classwork2Marks",
+        "classwork2Comment",
+        "homework1Marks",
+        "homework1Comment",
+        "homework2Marks",
+        "homework2Comment",
+        "classTest1Marks",
+        "classTest1Comment",
+        "classTest2Marks",
+        "classTest2Comment",
       ];
       const key = indexes[col];
       const data = dataRow[key];
 
-      if (col === 0) {
-        return {
-          kind: GridCellKind.Custom,
-          allowOverlay: false,
-          readonly: true,
-          data: data,
-          copyData: data.toString(),
-        };
-      } else if (col === 1) {
-        return {
-          kind: GridCellKind.Custom,
-          allowOverlay: false,
-          readonly: true,
-          data: data,
-          copyData: data.toString(),
-        };
-      } else if (col === 2) {
-        return {
-          kind: GridCellKind.Number,
-          allowOverlay: true,
-          readonly: false,
-          data: data as number,
-          displayData: String(data) || "unknown",
-        };
-      } else if (col === 3) {
-        return {
-          kind: GridCellKind.Custom,
-          allowOverlay: false,
-          readonly: true,
-          data: data,
-          copyData: data.toString(),
-        };
-      } else {
+      if (col === 1) {
         return {
           kind: GridCellKind.Text,
           allowOverlay: true,
           readonly: false,
           data: data as string,
           displayData: String(data),
+        };
+      } else if (
+        col === 2 ||
+        col === 3 ||
+        col === 5 ||
+        col === 7 ||
+        col === 9 ||
+        col === 11 ||
+        col === 13
+      ) {
+        return {
+          kind: GridCellKind.Number,
+          allowOverlay: true,
+          readonly: false,
+          data: data as number,
+          displayData: String(data) || "unknown",
+          contentAlign: "center",
+        };
+      } else {
+        return {
+          kind: GridCellKind.Custom,
+          allowOverlay: false,
+          readonly: true,
+          data: data,
+          copyData: data.toString(),
         };
       }
     },
@@ -107,13 +110,15 @@ const FigmaDesign2 = () => {
         title,
       } = cell.data;
 
-      if (col === 1) {
-        const imageUrl = String(cell.data);
-        drawImage(args, [imageUrl], 5, "center");
-        return;
-      }
-
-      if (col === 3) {
+      // draw comment using spirit manager
+      if (
+        col === 4 ||
+        col === 6 ||
+        col === 8 ||
+        col === 10 ||
+        col === 12 ||
+        col === 14
+      ) {
         spriteManager.drawSprite(
           "comment",
           "normal",
@@ -167,7 +172,7 @@ const FigmaDesign2 = () => {
 
       // Draw title
       ctx.fillStyle = "black";
-      ctx.font = "16px Arial";
+      ctx.font = "500 14px Arial";
       ctx.textAlign = "left";
       ctx.textBaseline = "top";
       ctx.fillText(title, titleX, textStartY);
@@ -260,4 +265,4 @@ const FigmaDesign2 = () => {
   );
 };
 
-export default FigmaDesign2;
+export default GradeOne;

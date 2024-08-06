@@ -78,3 +78,21 @@ export interface IFigmaDesignData2 {
   english: number;
   comment: string;
 }
+
+export interface IGradeOneData {
+  student: IStudentData;
+  term1TotalScore: string;
+  term1TotalGrade: number;
+  classwork1Marks: number;
+  classwork1Comment: string;
+  classwork2Marks: number;
+  classwork2Comment: string;
+  homework1Marks: number;
+  homework1Comment: string;
+  homework2Marks: number;
+  homework2Comment: string;
+  classTest1Marks: number;
+  classTest1Comment: string;
+  classTest2Marks: number;
+  classTest2Comment: string;
+}
