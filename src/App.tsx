@@ -10,6 +10,7 @@ import FigmaDesign from "./components/FigmaDesign/FigmaDesign";
 import CustomCellWithSvg from "./components/CustomCellWithSvg/CustomCellWithSvg";
 import FigmaDesign2 from "./components/FigmaDesign2/FigmaDesign2";
 import GradeOne from "./components/GradeOne/GradeOne";
+import ContextMenu from "./components/ContextMenu/ContextMenu";
 
 const App = () => {
   const demos = {
@@ -67,6 +68,11 @@ const App = () => {
       name: "Grade 1 figma page clone",
       value: "gradeOne",
       component: <GradeOne />,
+    },
+    contextMenu: {
+      name: "Open context menu on right click",
+      value: "contextMenu",
+      component: <ContextMenu />,
     },
   };
   const allDemo = Object.values(demos);
