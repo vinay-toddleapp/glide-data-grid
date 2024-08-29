@@ -11,6 +11,7 @@ import CustomCellWithSvg from "./components/CustomCellWithSvg/CustomCellWithSvg"
 import FigmaDesign2 from "./components/FigmaDesign2/FigmaDesign2";
 import GradeOne from "./components/GradeOne/GradeOne";
 import ContextMenu from "./components/ContextMenu/ContextMenu";
+import DialogCell from "./components/DialogCell/DialogCell";
 
 const App = () => {
   const demos = {
@@ -73,6 +74,11 @@ const App = () => {
       name: "Open context menu on right click",
       value: "contextMenu",
       component: <ContextMenu />,
+    },
+    dialogCell: {
+      name: "Open a dialog/modal on cell click",
+      value: "dialogCell",
+      component: <DialogCell />,
     },
   };
   const allDemo = Object.values(demos);
